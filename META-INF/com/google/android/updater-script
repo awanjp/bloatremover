@@ -1,0 +1,78 @@
+ui_print("******************************************");
+ui_print("Bloatware Removal Script for Android 5.x.x");
+ui_print("");
+ui_print("Release Date: 2015-03-24");
+ui_print("******************************************");
+show_progress(1, 15);
+ui_print("Unmounting system");
+run_program("/sbin/busybox", "umount", "/system");
+ui_print("Mounting system");
+run_program("/sbin/busybox", "mount", "/system");
+show_progress(1, 15);
+ui_print("Removing system bloat, if any...");
+delete_recursive(
+	"/system/app/Apollo",
+	"/system/app/BasicDreams",
+	"/system/app/Camera2",
+	"/system/app/CellBroadcastReceiver",
+	"/system/app/CMHome",
+	"/system/app/CMWallpapers",
+	"/system/app/DashClock",
+	"/system/app/DSPManager",
+	"/system/app/Email",
+	"/system/app/Exchange2",
+	"/system/app/Galaxy4",
+	"/system/app/HoloSpiralWallpaper",
+	"/system/app/LiveWallpapers",
+	"/system/app/MagicSmokeWallpapers",
+	"/system/app/NoiseField",
+	"/system/app/PhaseBeam",
+	"/system/app/PhotoPhase",
+	"/system/app/PhotoTable",
+	"/system/app/VideoEditor",
+	"/system/app/VisualizationWallpapers",
+	"/system/app/VoicePlus",
+	"/system/app/BasicDreams",
+	"/system/app/Browser",
+	"/system/app/Calendar",
+	"/system/app/Terminal",
+	"/system/app/CMFileManager",
+	"/system/app/HTMLViewer",
+	"/system/app/CMWallpapers",
+	"/system/app/LockClock",
+	"/system/app/LiveWallpapersPicker",
+	"/system/app/Email",
+	"/system/app/Exchange2",
+	"/system/app/Galaxy4",
+	"/system/app/HoloSpiralWallpaper",
+	"/system/app/LiveWallpapers",
+	"/system/app/MagicSmokeWallpapers",
+	"/system/app/PicoTts",
+	"/system/app/NoiseField",
+	"/system/app/PhaseBeam",
+	"/system/app/PhotoPhase",
+	"/system/app/PhotoTable",
+	"/system/app/SoundRecorder",
+	"/system/app/VisualizationWallpapers",
+	"/system/app/WhisperPush"
+);
+delete_recursive(	
+	"/system/priv-app/AudioFX",
+		"/system/priv-app/AudioFX",
+	"/system/priv-app/MeoWOS",
+  "/system/priv-app/FMRadio",
+  "/system/priv-app/CalendarProvider",
+	"/system/priv-app/PicoTts",
+	"/system/priv-app/talkback"
+);
+show_progress(1, 15);
+ui_print("Copying files");
+package_extract_dir("system", "/system");
+show_progress(1, 15);
+ui_print("Cleaning up and setting metadata");
+set_metadata_recursive("/system/addon.d", "uid", 0, "gid", 0, "dmode", 0755, "fmode", 0755, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
+set_metadata_recursive("/system/app", "uid", 0, "gid", 0, "dmode", 0755, "fmode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
+set_metadata_recursive("/system/priv-app", "uid", 0, "gid", 0, "dmode", 0755, "fmode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
+ui_print("Unmounting system");
+run_program("/sbin/busybox", "umount", "/system");
+ui_print("Installation complete! Enjoy the cleansing!");
